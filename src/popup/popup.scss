@@ -1,0 +1,47 @@
+.App {
+    text-align: center;
+    width: 350px;
+    height: 320px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 100px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.App-title {
+    font-size: 1.5em;
+    color: white;
+}
+
+.Form {
+    width: 90%;
+    padding: 10px;
+}
+
+.niceButton {
+    display: inline-block;
+    padding: 12px 22px;
+    width: 80%;
+    margin: 10px auto;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: rgb(16, 185, 214);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 3px #999;
+}
+.niceButton:hover {
+    background-color: #1795bb;
+}
+.niceButton:active {
+    background-color: #1795bb;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
