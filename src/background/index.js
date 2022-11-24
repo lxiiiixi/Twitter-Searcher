@@ -1,8 +1,7 @@
 /*global chrome*/
 import { apiRequest } from '@/api'
+import { switchTime } from "../common/utils"
 
-let urlIndex = 0
-let urlList = []
 
 let searchInfo = {}
 
@@ -19,21 +18,23 @@ chrome.runtime.onMessage.addListener(
             openTabs()
         } else if (request.type === "parseLabels") {
             console.log("本次上传的数据列表:", request.data);
-            // sendResponse({ data: request.data })
+            // 下载内容
+            console.log("获取数据结束 开始下载");
+            chrome.downloads.download({
+                url: request.downLoadFile.url,
+                filename: request.downLoadFile.filename
+            })
             // closeTabs(request.dataInfo.url)
             return true;
         }
     }
 );
 
-
 // let timer = null
 function openTabs() {
-    const openUrl = `https://twitter.com/search?q=${searchInfo.keywords}&src=recent_search_click&f=live`
+    const openUrl = searchInfo.searchUrl
     console.log("打开URL:", openUrl);
-    chrome.tabs.create({ url: openUrl }, () => {
-
-    })
+    chrome.tabs.create({ url: openUrl }, () => { })
     // 获取到刚刚打开的tab的id
     chrome.tabs.query({ url: openUrl }, function (tabs) {
         searchInfo.tabId = tabs[0].id
@@ -41,8 +42,6 @@ function openTabs() {
         // console.log(searchInfo.tabId, "新打开页面的tabid");
     })
 }
-
-
 
 // 有tab活跃的时候触发(给tabId指定为刚刚默认打开的,否则每个tab页面都会收到相关的消息)
 chrome.tabs.onUpdated.addListener((tab = searchInfo.tabId, changeInfo) => {
@@ -58,6 +57,8 @@ chrome.tabs.onUpdated.addListener((tab = searchInfo.tabId, changeInfo) => {
 });
 
 
+
+
 function closeTabs(url) { // 3秒左右关闭
     const time = 4000 + Math.round(Math.random() * 3000)
     setTimeout(function () {
@@ -66,29 +67,6 @@ function closeTabs(url) { // 3秒左右关闭
         })
     }, time)
 }
-
-
-
-// 文件下载
-// function downloadFile(content, dataInfo) {
-//    const { type, keywords } = dataInfo
-//    const time = switchTime(new Date().getTime())
-//    const filename = `${type}_${keywords}_${time}.json`
-//    const downloadContent = JSON.stringify(content)
-
-//    var blob = new Blob([downloadContent], { type: "text/json;charset=UTF-8" });
-//    var url = window.URL.createObjectURL(blob);
-//    console.log(blob, url);
-
-//    setTimeout(function () {
-//       chrome.downloads.download({
-//          url: url,
-//          filename: filename
-//       })
-//    }, 2000)
-// }
-
-
 
 
 

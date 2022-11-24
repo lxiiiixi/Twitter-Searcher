@@ -23,6 +23,7 @@
   "permissions": [
     "tabs",
     "storage",
+    "downloads",
     "declarativeContent"
   ],
   "host_permissions": [],
