@@ -29,9 +29,9 @@ function Popup() {
 
     return (
         <div className="App">
-            <header className="App-header">
+            {/* <header className="App-header">
                 <h1 className="App-title">Twitter Bot</h1>
-            </header>
+            </header> */}
             <Form labelCol={{ span: 8 }} className="Form" form={form} onFinish={onFinish}>
                 <Form.Item name="keywords" label="Keywords" rules={[{ required: true, message: 'Please input a keyword!' }]}>
                     <Input placeholder="输入需要搜索的关键词" />

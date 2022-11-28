@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
         flag = false
         if (window.confirm("确定要获取本页面的数据吗")) {
-            console.log("触发数据获取的函数");
+            // console.log("触发数据获取的函数");
             getData(searchInfo.hours)
         } else {
             // 这里只能传到background里面去关闭
@@ -48,11 +48,11 @@ function getData(time) {
     // 控制窗口滚动
     function windowScroll(stopTimeStamp, getDataFunction) {
 
-        console.log("scroll");
+        // console.log("scroll");
 
         clearTimeout(timer)
         function scrollAgain() {
-            console.log("开始获取时间节点");
+            // console.log("开始获取时间节点");
             let ifScroll = true
             const Time = Array.from(document.querySelectorAll("time"))
 
@@ -65,7 +65,7 @@ function getData(time) {
             if (Time.length) {
                 // 问题的临时解决方法: 每次只对比最后一个time节点, 但是这样有可能会在最后一个正好命中广告 / 转发的内容(小概率)
                 // 后来发现碰到的概率还挺大的 那就对比这个和前面两个节点 如果都小于就不滚 否则还是滚一次
-                console.log("开始本轮判断");
+                // console.log("开始本轮判断");
                 const itemTimeStamp1 = new Date(Time[Time.length - 1].dateTime).getTime()
                 const itemTimeStamp2 = new Date(Time[Time.length - 2].dateTime).getTime()
                 // 页面滚动的种终止条件
@@ -77,7 +77,7 @@ function getData(time) {
 
 
                 if (ifScroll) {
-                    console.log("滚动+再执行一次");
+                    // console.log("滚动+再执行一次");
                     window.scrollBy(0, window.innerHeight * 3)
 
                     // 隐藏bug:在网络不佳的时候可能会出现执行了滚动 但是页面不加载(网络问题) 但是内容一直重复获取的问题
@@ -88,7 +88,7 @@ function getData(time) {
                         scrollAgain()
                     }, [3000])
                 } else {
-                    console.log("所有数据获取完毕,开始提交数据到background", resultData);
+                    // console.log("所有数据获取完毕,开始提交数据到background", resultData);
                     const downLoadData = filterData(removeTheSame(resultData), stopTimeStamp)
                     const downLoadFile = getDownLoadFile(downLoadData, searchInfo)
 
@@ -116,7 +116,7 @@ function getData(time) {
         // 这里需要设置延时器等待屏幕加载
         // 第一次执行
         timer = setTimeout(function () {
-            console.log("first scroll");
+            // console.log("first scroll");
             scrollAgain()
         }, [4000])
 
